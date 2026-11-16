@@ -3,8 +3,9 @@ from __future__ import annotations
 
 import argparse
 import csv
+from itertools import product
 from datetime import date
-from math import ceil, floor, inf, isfinite, log10
+from math import ceil, floor, hypot, inf, isfinite, log10
 from pathlib import Path
 
 import matplotlib
@@ -261,8 +262,15 @@ def ordered_label_centers(targets, half_widths, left_edge, right_edge, spacing):
     return [(a + b) / 2 for a, b in zip(forward, reversed(backward))]
 
 
-def annotate_points(ax, observations, traces, renderer):
-    """Anchor model labels from oldest to newest and pack them vertically."""
+def annotate_points(ax, observations, traces, renderer, headroom=0):
+    """Label each series on one side of its curve, ordered from oldest to newest.
+
+    Within a series, a newer model's label never starts left of an older one's. Each series
+    keeps all its labels above or below its own curve, preferably on one shared row; every
+    above/below combination is tried and the least cluttered one is drawn. Short leaders
+    matter more than avoiding a partial overlap with the series' own curve. With `headroom`
+    (points), labels may extend above the top of the axes.
+    """
     if not observations:
         return
     observations = sorted(observations, key=lambda row: (row[0]["launch"], row[0]["id"]))
@@ -275,60 +283,109 @@ def annotate_points(ax, observations, traces, renderer):
         renderer.get_text_width_height_descent(device["short_name"], font, ismath=False)[0] / 2
         + 1.7 * scale for device, _, _ in observations
     ]
-    label_x = ordered_label_centers(positions[:, 0], half_widths, area.x0, area.x1, 10.5 * scale)
     half_height = 5.7 * scale
+    clearance = half_height + 3.5 * scale
+    series_keys = list(dict.fromkeys(device["series"] for device, _, _ in observations))
+    members = {key: [i for i, (d, _, _) in enumerate(observations) if d["series"] == key]
+               for key in series_keys}
+    label_x = [0.0] * len(observations)
+    for key, idx in members.items():
+        # Order labels chronologically within the series and keep them near their points.
+        centers = ordered_label_centers(positions[idx, 0], [half_widths[i] for i in idx],
+                                        area.x0, area.x1, 6 * scale)
+        for i, center in zip(idx, centers):
+            label_x[i] = center
     marker_boxes = [Bbox.from_extents(x - 3 * scale, y - 3 * scale, x + 3 * scale, y + 3 * scale)
                     for x, y in positions]
-    label_boxes = []
-    connectors = []
-    paths = [line.get_path().transformed(line.get_transform()) for line in traces]
+    paths = {key: line.get_path().transformed(line.get_transform())
+             for key, line in traces.items()}
+    lower, upper = area.y0 + half_height, area.y1 - half_height + headroom * scale
 
-    def placement_priority(i):
-        y = positions[i, 1]
-        edge_distance = min(y - area.y0, area.y1 - y)
-        neighbors = sum(abs(label_x[i] - px) < half_widths[i] + width
-                        and abs(y - py) < 21 * scale
-                        for px, py, width in zip(label_x, positions[:, 1], half_widths))
-        return edge_distance >= 20 * scale, -neighbors
+    def place(sides):
+        label_boxes, connectors, placed = [], [], []
+        previous_row = {}
+        previous_box = {}
+        total = 0.0
+        for i, (device, _, _) in enumerate(observations):
+            key = device["series"]
+            direction = 1 if sides[key] == "above" else -1
+            x, y = positions[i]
+            fallback = {y - direction * (clearance + step * scale) for step in range(0, 48, 3)}
+            best = None
+            earlier = previous_box.get(key)
+            shifts = {0, -9, 9, -18, 18, -30, 30}
+            if earlier:
+                # The leftmost position that keeps this label right of the series' previous one.
+                leftmost = max(earlier.x0 + half_widths[i], earlier.x1 - half_widths[i]) + scale
+                if leftmost > label_x[i]:
+                    shifts.add((leftmost - label_x[i]) / scale)
+            for shift in sorted(shifts, key=abs):
+                center = label_x[i] + shift * scale
+                left, right = center - half_widths[i], center + half_widths[i]
+                if left < area.x0 or right > area.x1:
+                    continue
+                if earlier and (left <= earlier.x0 or right <= earlier.x1):
+                    continue  # keep newer labels to the right of older ones in the series
+                obstacles = [box for box in marker_boxes + label_boxes
+                             if left < box.x1 and right > box.x0]
+                preferred = {y + direction * (clearance + step * scale) for step in range(0, 48, 3)}
+                for box in obstacles:
+                    preferred.update((box.y0 - half_height - 0.6 * scale,
+                                      box.y1 + half_height + 0.6 * scale))
+                if earlier:
+                    # Reusing the previous label's row keeps a series on one line.
+                    preferred.add((earlier.y0 + earlier.y1) / 2)
+                for cy in preferred | fallback:
+                    candidate = evaluate(i, key, direction, x, y, center, left, right, cy,
+                                         obstacles, label_boxes, connectors, previous_row)
+                    if candidate and (best is None or candidate[0] + shift ** 2 < best[0]):
+                        best = (candidate[0] + shift ** 2, *candidate[1:], center)
+            if best is None:
+                return inf, None
+            cost, cy, box, connector, center = best
+            total += cost
+            previous_row[key] = cy
+            previous_box[key] = box
+            label_boxes.append(box)
+            connectors.append(connector)
+            placed.append((center, cy))
+        return total, placed
 
-    # Prioritize points near the top and bottom, where text has fewer places to fit.
-    for i in sorted(range(len(xy)), key=placement_priority):
-        device, _, color = observations[i]
+    def evaluate(i, key, direction, x, y, center, left, right, cy,
+                 obstacles, label_boxes, connectors, previous_row):
+        if not lower <= cy <= upper:
+            return None
+        on_side = (cy - y) * direction >= clearance - 0.01
+        box = Bbox.from_extents(left, cy - half_height, right, cy + half_height)
+        if box.count_overlaps(obstacles):
+            return None
+        connector = PlotPath([(x, y), (center, cy)])
+        own = paths[key].intersects_bbox(box, filled=False)
+        others = sum(path.intersects_bbox(box, filled=False)
+                     for other, path in paths.items() if other != key)
+        blocked = sum(connector.intersects_bbox(b, filled=False) for b in label_boxes)
+        blocked += sum(path.intersects_bbox(box, filled=False) for path in connectors)
+        crossed = sum(connector.intersects_path(path, filled=False) for path in connectors)
+        # A leader cutting through another series' curve is hard to follow.
+        cut = sum(connector.intersects_path(path, filled=False)
+                  for other, path in paths.items() if other != key)
+        length = hypot(center - x, cy - y) / scale
+        row = (cy - previous_row.get(key, cy)) / scale
+        cost = (1.5 * length ** 2 + 0.5 * row ** 2 + 250 * own + 60 * others
+                + 420 * blocked + 130 * crossed + 600 * cut
+                + (0 if on_side else 4000))
+        return cost, cy, box, connector
+
+    best_cost, best_placed = inf, None
+    for combination in product(("above", "below"), repeat=len(series_keys)):
+        cost, placed = place(dict(zip(series_keys, combination)))
+        if cost < best_cost:
+            best_cost, best_placed = cost, placed
+    require(best_placed is not None, "Cannot place the model labels")
+
+    for i, (device, _, color) in enumerate(observations):
         x, y = positions[i]
-        center = label_x[i]
-        left = center - half_widths[i]
-        right = center + half_widths[i]
-        obstacles = [box for box in marker_boxes + label_boxes
-                     if left < box.x1 and right > box.x0]
-        lower, upper = area.y0 + half_height, area.y1 - half_height
-        candidates = {lower, upper, y}
-        for rise in range(8, 73, 4):
-            candidates.update((y + rise * scale, y - rise * scale))
-        for box in obstacles:
-            # Include gaps between existing labels even when the regular offsets miss them.
-            candidates.update((box.y0 - half_height - 0.4 * scale,
-                               box.y1 + half_height + 0.4 * scale))
-        best = None
-        for cy in sorted(candidates):
-            if not lower <= cy <= upper:
-                continue
-            box = Bbox.from_extents(left, cy - half_height, right, cy + half_height)
-            if box.count_overlaps(obstacles):
-                continue
-            connector = PlotPath([(x, y), (center, cy)])
-            crossings = sum(path.intersects_bbox(box, filled=False) for path in paths)
-            blocked = sum(connector.intersects_bbox(b, filled=False) for b in label_boxes)
-            blocked += sum(path.intersects_bbox(box, filled=False) for path in connectors)
-            crossed_leaders = sum(connector.intersects_path(path, filled=False)
-                                  for path in connectors)
-            distance = abs(cy - y) / scale
-            cost = distance ** 2 + 160 * crossings + 420 * blocked + 130 * crossed_leaders
-            if best is None or cost < best[0]:
-                best = (cost, cy, box, connector)
-        require(best is not None, f"Cannot place the model label for {device['short_name']}")
-        _, cy, box, connector = best
-        label_boxes.append(box)
-        connectors.append(connector)
+        center, cy = best_placed[i]
         ax.annotate(device["short_name"], xy[i], xytext=((center - x) / scale, (cy - y) / scale),
                     textcoords="offset points", fontproperties=font, ha="center", va="center",
                     zorder=4, bbox={"boxstyle": "square,pad=0.10", "fc": "white", "ec": "none"},
@@ -337,7 +394,7 @@ def annotate_points(ax, observations, traces, renderer):
 
 
 def trends(devices, panels, ylabel, *, linear=False, dense_y_ticks=False, share_y=False,
-           shared_y_pair=None):
+           shared_y_pair=None, label_headroom=0):
     rows = len(panels)
     height = 0.90 + rows * 2.18
     fig, axes = plt.subplots(rows, 1, figsize=(7.15, height), sharex=True, sharey=share_y)
@@ -359,7 +416,7 @@ def trends(devices, panels, ylabel, *, linear=False, dense_y_ticks=False, share_
     observations_by_row = []
     for ax, (title, points) in zip(axes, panels):
         ax.set_title(title, loc="left", pad=6)
-        traces = []
+        traces = {}
         observations = []
         for key, (_, color, marker, linestyle) in SERIES.items():
             selected = [d for d in devices if d["series"] == key]
@@ -370,7 +427,7 @@ def trends(devices, panels, ylabel, *, linear=False, dense_y_ticks=False, share_
             trace, = ax.plot([d["launch"] for d in selected],
                              [points.get(d["id"]) for d in selected],
                              color=color, linestyle=linestyle, linewidth=1.05, zorder=2)
-            traces.append(trace)
+            traces[key] = trace
             for device, value in observed:
                 ax.plot(device["launch"], value, marker=marker, markersize=4.5,
                         markerfacecolor=color,
@@ -399,7 +456,7 @@ def trends(devices, panels, ylabel, *, linear=False, dense_y_ticks=False, share_
         else:
             log_ticks(ax, panel_values, dense=dense_y_ticks)
     start = min(min(dates).toordinal() - 220, date(first_year, 1, 1).toordinal())
-    end = max(dates).toordinal() + 480
+    end = max(dates).toordinal() + 620
     axes[0].set_xlim(date.fromordinal(start), date.fromordinal(end))
     fig.subplots_adjust(left=0.105, right=0.98, bottom=0.93 / height,
                         top=1 - 0.32 / height, hspace=0.28)
@@ -409,7 +466,7 @@ def trends(devices, panels, ylabel, *, linear=False, dense_y_ticks=False, share_
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
     for ax, observations, traces in observations_by_row:
-        annotate_points(ax, observations, traces, renderer)
+        annotate_points(ax, observations, traces, renderer, label_headroom)
     return fig
 
 
@@ -453,7 +510,8 @@ def main():
             ylabel = "Peak matrix throughput (GFLOPS)" if low_precision_peak else label
             shared_pair = ("FP16", "BF16") if metric == DRAM and precisions == REDUCED else None
             fig = trends(plotted_devices, panels, ylabel, dense_y_ticks=metric == DRAM,
-                         share_y=metric == PEAK, shared_y_pair=shared_pair)
+                         share_y=metric == PEAK, shared_y_pair=shared_pair,
+                         label_headroom=14 if metric == DRAM else 0)
             save(fig, out, f"{filename}-{suffix}", formats)
 
     for field, name, axis_label in (
