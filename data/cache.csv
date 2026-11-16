@@ -1,0 +1,11 @@
+device_id,level,capacity_mib,bandwidth_gb_s,basis,source_id,method
+epyc-7763,L3,256,2642,measured,cache-cpu,"LIKWID load-only, socket aggregate across eight CCDs (NPS4); Table 2."
+xeon-8360y,L3,54,452,measured,cache-cpu,"LIKWID load-only, socket aggregate (SNC2); Table 2."
+xeon-8470,L3,105,826,measured,cache-cpu,"LIKWID load-only, socket aggregate (SNC4); Table 2."
+v100,L2,6,2996.8,measured,cache-v100,"ERT empirical V100 L2 roof in the hierarchical Roofline figures."
+h100,L2,50,3200,measured,cache-h100,"CUDA read-only microbenchmark with L1 bypass; counts the read stream only."
+max1550,L2,408,13000,specified,intel-max-arch,"Vendor peak L2 read bandwidth for the whole two-stack GPU."
+mi300x,Infinity Cache,256,17200,specified,amd-cdna3,"Vendor peak aggregate cache-to-XCD bandwidth; AMD CDNA 3 white paper, pp. 9–11."
+h200,L2,,9200,measured,cache-tilesight,"Microbenchmark-calibrated L2 bandwidth on H200 SXM; Table 3."
+b200,L2,,20500,measured,cache-tilesight,"Microbenchmark-calibrated L2 bandwidth on B200; Table 3."
+mi455x,L2,192,54000,specified,amd-cdna5,"Vendor peak aggregate L2 bandwidth across two fabric and cache dies (27 TB/s per die)."

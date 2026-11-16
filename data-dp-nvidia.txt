@@ -4,7 +4,6 @@
 # http://www.karlrupp.net/2013/06/cpu-gpu-and-mic-hardware-characteristics-over-time/
 #
 #Year   GFLOPs   Pixel-Shader   Mem-BW     TDP   SMs  Freq(MHz)   Name 
-2008      78        240           102      188   30   1296        "Tesla C1060"
 2009      78        240           102      188   30   1296        "Tesla C1060"
 2010     515        448           144      238   14   1150        "Tesla C2050"
 2011     666        512           177      250   16   1300        "Tesla M2090"
@@ -15,4 +14,5 @@
 2016    4700       3584           720      250   56   1328        "Tesla P100"
 2017    7800       5120           900      300   80   1455        "Tesla V100"
 2020    9700       6912          1555      250   128  1410        "Tesla A100"
-
+2022   20390      14592          2039      350   256  1755        "Tesla H100"    
+2024   30160      16869          3360      600   ---  1785        "Tesla H200"

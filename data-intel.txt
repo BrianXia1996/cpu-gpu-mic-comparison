@@ -4,8 +4,8 @@
 # http://www.karlrupp.net/2013/06/cpu-gpu-and-mic-hardware-characteristics-over-time/
 #
 #Year   GFLOPs-SP   GFLOPs-DP  Cores  Mem-BW/Socket  TDP   Freq(MHz)  Name
-2007      102         51       4          26         150   3200       "Xeon X5482"
-2008      108         54       4          26         150   3400       "Xeon X5492"
+#2007      102         51       4          26         150   3200       "Xeon X5482"
+#2008      108         54       4          26         150   3400       "Xeon X5492"
 2009      106         53       4          32         130   3300       "Xeon W5590"
 2010      160         80       6          32         130   3300       "Xeon X5680"
 2011      166         83       6          32         130   3470       "Xeon X5690"
@@ -18,3 +18,5 @@
 2018     9320       4660      56         282         400   2600       "Xeon Platinum 9282"
 2020     5197       2598      28         153         250   2900       "Xeon Platinum 8380HL"
 2021     5888       2944      40         205         270   2300       "Xeon Platinum 8380"
+2023     7396       3648      60       307.2         350   1900       "Xeon Max 9480"
+2024    16384       8192     128       614.4         500   2000       "Xeon 6980P"

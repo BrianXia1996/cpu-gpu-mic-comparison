@@ -1,0 +1,86 @@
+source_id,reference,url
+rupp,"Karl Rupp, CPU, GPU and MIC Hardware Characteristics over Time and original tables",https://github.com/karlrupp/cpu-gpu-mic-comparison
+intel-xeon,Intel Xeon processor specifications,https://www.intel.com/content/www/us/en/ark/products/series/595/intel-xeon-processors.html
+intel-e5,Intel Xeon E5-2600 Product Family fact sheet,https://download.intel.com/newsroom/kits/xeon/e5/pdfs/Intel_Xeon_E5_Factsheet.pdf
+intel-e5v3,Intel Xeon E5-2699 v3 specifications,https://www.intel.com/content/www/us/en/products/sku/81061/intel-xeon-processor-e52699-v3-45m-cache-2-30-ghz/specifications.html
+intel-skylake,Intel Xeon Scalable Family platform brief,https://www.intel.com/content/dam/www/public/us/en/documents/platform-briefs/intro-xeon-processor-scalable-family.pdf
+intel-icelake,Intel Xeon Platinum 8360Y specifications (default profile),https://www.intel.com/content/www/us/en/products/sku/212459/intel-xeon-platinum-8360y-processor-54m-cache-2-40-ghz/specifications.html
+intel-sapphire,Intel Xeon Platinum 8470 specifications,https://www.intel.com/content/www/us/en/products/sku/231728/intel-xeon-platinum-8470-processor-105m-cache-2-00-ghz/specifications.html
+intel-granite,Intel Xeon 6980P specifications,https://www.intel.com/content/www/us/en/products/sku/240777/intel-xeon-6980p-processor-504m-cache-2-00-ghz/specifications.html
+intel-amx,Intel Xeon 6900 P-core fact sheet,https://download.intel.com/newsroom/2024/data-center/Fact-Sheet-Xeon-6-P-Core.pdf
+intel-amx-types,Intel Xeon AMX datatype guide,https://community.intel.com/t5/Blogs/Tech-Innovation/Artificial-Intelligence-AI/In-production-AI-Optimization-Guide-for-Xeon-Search-and/post/1726701
+intel-phi,Intel Xeon Phi 7290 specifications,https://www.intel.com/content/www/us/en/products/sku/95830/intel-xeon-phi-processor-7290-16gb-1-50-ghz-72-core/specifications.html
+intel-max,Intel Data Center GPU Max 1550 specifications,https://www.intel.com/content/www/us/en/products/sku/232873/intel-data-center-gpu-max-1550/specifications.html
+intel-max-arch,Intel Datacenter GPU Max Series throughput and memory hierarchy (2-stack GPU),https://simplecore.intel.com/oneapi-io/wp-content/uploads/sites/98/Andres-Rodriguez-AI-Software-and-Hardware-Acceleration.pdf
+intel-arc-b580,Intel Arc B580 graphics specifications,https://www.intel.com/content/www/us/en/products/sku/241598/intel-arc-b580-graphics/specifications.html
+intel-arc-b70,Intel Arc Pro B70 graphics specifications,https://www.intel.com/content/www/us/en/products/sku/245797/intel-arc-pro-b70-graphics/specifications.html
+intel-xe,Intel Xe GPU Architecture (vector and XMX throughput per engine),https://www.intel.com/content/www/us/en/docs/oneapi/optimization-guide-gpu/2025-2/intel-xe-gpu-architecture.html
+amd-opteron,Supermicro SPEC CPU2006 submission for Opteron 6174,https://www.spec.org/cpu2006/results/res2010q4/cpu2006-20101206-13906.html
+amd-zen1,AMD EPYC 7001 series launch and SKU table,https://ir.amd.com/news-events/press-releases/detail/773/amd-epyc-datacenter-processor-launches-with-record-setting-performance-optimized-platforms-and-global-server-ecosystem-support
+amd-zen2,AMD EPYC 7002 series launch and SKU table,https://ir.amd.com/news-events/press-releases/detail/904/2nd-gen-amd-epyc-processors-set-new-standard-for-the-modern-datacenter-with-record-breaking-performance-and-significant-tco-savings
+amd-zen3,AMD EPYC 7003 series launch and SKU table,https://www.amd.com/en/newsroom/press-releases/2021-3-15-amd-epyc-7003-series-cpus-set-new-standard-as-hig.html
+amd-zen4,AMD EPYC 9654 specifications,https://www.amd.com/en/products/processors/server/epyc/4th-generation-9004-and-8004-series/amd-epyc-9654.html
+amd-zen5,AMD EPYC 9005 series datasheet,https://www.amd.com/content/dam/amd/en/documents/epyc-business-docs/datasheets/amd-epyc-9005-series-processor-datasheet.pdf
+amd-zen6,AMD EPYC server processor specifications,https://www.amd.com/en/products/specifications/server-processor.html
+amd-zen-arch,AMD Zen architecture overview,https://www.amd.com/en/technologies/zen-core.html
+amd-zen-hpc,AMD EPYC Zen 4 and Zen 5 vector FMA throughput,https://community.amd.com/t5/server-processors/leadership-hpc-performance-with-5th-generation-amd-epyc/ba-p/739498
+amd-firepro,AMD FirePro S9150 specifications,https://www.amd.com/en/support/downloads/drivers.html/graphics/firepro/firepro-s-series/firepro-s9150.html
+amd-accelerators,AMD accelerator specifications (MI60 and later),https://www.amd.com/en/products/specifications/accelerators.html
+amd-mi100,AMD Instinct MI100 product brief,https://www.amd.com/content/dam/amd/en/documents/instinct-business-docs/product-briefs/instinct-mi100-brochure.pdf
+amd-mi250x,AMD Instinct MI250X specifications,https://www.amd.com/en/products/accelerators/instinct/mi200/mi250x.html
+amd-mi300x,AMD Instinct MI300X datasheet,https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/data-sheets/amd-instinct-mi300x-data-sheet.pdf
+amd-cdna3,"AMD CDNA 3 white paper (Infinity Cache read bandwidth, pp. 9–11)",https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-3-white-paper.pdf
+amd-mi355x,AMD Instinct MI355X specifications,https://www.amd.com/en/products/accelerators/instinct/mi350/mi355x.html
+amd-mi455x,AMD Instinct MI455X specifications,https://www.amd.com/en/products/accelerators/instinct/mi400/mi455x.html
+amd-mi455x-ship,AMD Q3 2026 earnings commentary (MI455X volume shipments),https://newsroom.amd.com/documents/2026/11/84f4476b-f064-4f0f-957c-fe484853e178.pdf
+amd-radeon,AMD Radeon graphics specifications,https://www.amd.com/en/products/specifications/graphics.html
+amd-rdna4,AMD Radeon RX 9070 XT specifications,https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070xt.html
+nv-grace,NVIDIA Grace CPU Superchip architecture and dual-CPU peak,https://developer.nvidia.com/blog/nvidia-grace-cpu-superchip-architecture-in-depth/
+nv-vera,NVIDIA single Grace and Vera CPU configuration (table 2),https://developer.nvidia.com/blog/?p=111036
+nv-tesla,NVIDIA Tesla master deck (C1060 and C2050),https://www.nvidia.com/docs/IO/96964/Tesla_Master_Deck.pdf
+nv-kepler,NVIDIA Tesla K-series datasheet,https://www.nvidia.com/content/PDF/kepler/Tesla-KSeries-Overview-LR.pdf
+nv-pascal,NVIDIA Tesla P100 SXM datasheet,https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-p100/pdf/nvidia-tesla-p100-datasheet.pdf
+nv-volta,NVIDIA Volta architecture white paper (V100 SXM2),https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-product-literature/volta-architecture-whitepaper.pdf
+nv-ampere,NVIDIA Ampere architecture (A100 launch SXM 40 GB),https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/
+nv-a100,NVIDIA A100 datasheet (SXM 40 GB and 80 GB),https://resources.nvidia.com/en-us-gpu/nvidia-a100-datashee-1
+nv-h100,NVIDIA H100 datasheet (H100 SXM),https://resources.nvidia.com/en-us-gpu-resources/h100-datasheet-24306?download=1
+nv-h200,NVIDIA H200 SXM specifications,https://www.nvidia.com/en-gb/data-center/h200/
+nv-blackwell,NVIDIA Blackwell datasheet (individual HGX B200 GPU),https://dam-cdn.nvd.orangelogic.com/AssetLink/y441155802qub41q118b2852i557jem5.pdf
+nv-b300,NVIDIA HGX B200 and B300 specifications (eight GPUs),https://www.nvidia.com/en-au/data-center/hgx/
+nv-hgx-config,NVIDIA HGX B200 and B300 reference architecture (memory and power),https://docs.nvidia.com/enterprise-reference-architectures/hgx-ai-factory/latest/components.html
+nv-b300-brief,NVIDIA Blackwell Ultra datasheet (HGX B300 GPU),https://dam-cdn.nvd.orangelogic.com/AssetLink/1k0p832eq8r5ca0u5383ie5o4tp3bst1.pdf
+nv-rubin,NVIDIA Vera Rubin NVL72 specifications (individual Rubin GPU column),https://www.nvidia.com/en-us/data-center/vera-rubin-nvl72/
+nv-rubin-ship,NVIDIA FY2027 Q2 Form 10-Q (Vera Rubin production shipments),https://investor.nvidia.com/files/doc_financials/2027/NVDA-2027-Q2-10Q-Final-including-exhibits.pdf
+nv-rtx,"NVIDIA RTX Blackwell white paper (table 6, dense tensor and non-tensor)",https://images.nvidia.com/aem-dam/Solutions/geforce/blackwell/nvidia-rtx-blackwell-gpu-architecture.pdf
+nv-nvfp4,NVIDIA NVFP4 format description,https://developer.nvidia.com/blog/introducing-nvfp4-for-efficient-and-accurate-low-precision-inference/
+cache-cpu,"Lacey et al., Cache Blocking of Distributed-Memory Parallel Matrix Power Kernels, Table 2",https://doi.org/10.1177/10943420251319332
+cache-v100,"Yang et al., Hierarchical Roofline Analysis for GPUs, V100 empirical L2 ceiling",https://amcr.lbl.gov/wp-content/uploads/2025/11/cug19-roofline-final.pdf
+intel-amx-bf16,Intel AMX Technology Brief (1024 BF16 operations per core-cycle),https://cdrdv2-public.intel.com/785250/Intel%20AMX%20Technology%20Brief.pdf
+intel-phi-7120,Intel Xeon Phi 7120P specifications,https://www.intel.com/content/www/us/en/products/sku/75799/intel-xeon-phi-coprocessor-7120p-16gb-1-238-ghz-61-core/specifications.html
+nv-blackwell-fp64,MIT ORCD B200 and B300 comparison (cuBLAS DGEMM measurements),https://github.com/mit-orcd/orcd-benchmarks/blob/main/b300-nodes/COMPARISON-b200-vs-b300.md
+amd-hd5870,AMD Radeon HD 5800 series launch,https://ir.amd.com/financial-information/sec-filings/content/0001193125-10-035218/d10k.htm
+amd-hd7970,AMD Radeon HD 7970 GHz Edition launch,https://ir.amd.com/news-events/press-releases/detail/393/amd-takes-graphics-crown-with-amd-radeontm-hd-7970-ghz-edition
+cache-h100,"Kane Walter, Measuring L2 Bandwidth on an NVIDIA H100 (read-only measurement)",https://www.kanewalter.com/writing/18-l2-cache-bandwidth/
+intel-max-launch,Intel January 2023 launch of Sapphire Rapids and GPU Max Series,https://newsroom.intel.com/data-center/accelerating-customer-results-with-accelerated-computing
+intel-b580-launch,Intel Arc B580 December 2024 launch,https://www.intel.com/content/www/us/en/newsroom/news/intel-launches-arc-b-series-graphics-cards.html
+intel-b70-launch,Intel Arc Pro B70 March 2026 launch,https://www.intel.com/content/www/us/en/newsroom/news/client-computing/intel-core-ultra-series-3-with-vpro-powers-next-gen-pcs-on-18a.html
+amd-turin-launch,AMD 5th Gen EPYC launch (October 2024),https://www.amd.com/en/newsroom/press-releases/2024-10-10-amd-launches-5th-gen-amd-epyc-cpus-maintaining-le.html
+amd-venice-launch,AMD 6th Gen EPYC launch (November 2026),https://ir.amd.com/news-events/press-releases/detail/1305/amd-showcases-6th-gen-amd-epyc-processors-to-lead-next-era-of
+amd-rdna4-launch,AMD RDNA 4 press release with March 2025 retail dates,https://ir.amd.com/news-events/press-releases/detail/1238/amd-unveils-next-generation-amd-rdna-4-architecture-with-the
+nv-grace-launch,NVIDIA Grace Hopper full production announcement (May 2023),https://investor.nvidia.com/news/press-release-details/2023/NVIDIA-Grace-Hopper-Superchips-Designed-for-Accelerated-Generative-AI-Enter-Full-Production/default.aspx
+nv-vera-launch,NVIDIA Vera CPU launch (March 2026),https://nvidianews.nvidia.com/news/nvidia-launches-vera-cpu-purpose-built-for-agentic-ai
+nv-k20x-launch,NVIDIA K20X launch (November 2012),https://nvidianews.nvidia.com/news/nvidia-unveils-world-s-fastest-most-efficient-accelerators-powers-world-s-no-1-supercomputer-6622729
+nv-h100-launch,NVIDIA H100 introduction (March 2022),https://nvidianews.nvidia.com/news/nvidia-announces-hopper-architecture-the-next-generation-of-accelerated-computing
+nv-h200-launch,NVIDIA H200 introduction (November 2023),https://nvidianews.nvidia.com/news/nvidia-supercharges-hopper-the-worlds-leading-ai-computing-platform
+nv-b200-launch,NVIDIA B200 introduction (March 2024),https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing/
+nv-b300-launch,NVIDIA B300 introduction (March 2025),https://nvidianews.nvidia.com/news/nvidia-blackwell-ultra-ai-factory-platform-paves-way-for-age-of-ai-reasoning
+nv-rubin-launch,NVIDIA Rubin introduction (January 2026),https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Kicks-Off-the-Next-Generation-of-AI-With-Rubin--Six-New-Chips-One-Incredible-AI-Supercomputer/
+amd-cdna5,"AMD CDNA 5 architecture white paper (two FCDs at 27 TB/s each, p. 10)",https://www.amd.com/content/dam/amd/en/documents/products/technologies/cdna/amd-cdna5-whitepaper.pdf
+cache-tilesight,"TileSight preprint, Table 3 and §5.1 (H200 SXM and B200 measured L2)",https://arxiv.org/html/2607.22432v1
+amd-bf16,uops.info instruction microbenchmarks for VDPBF16PS on Zen 4 and Zen 5,https://uops.info/html-instr/VDPBF16PS_ZMM_ZMM_ZMM.html
+intel-w5590-launch,Intel Chip Shots (August 2009 W5590 announcement),https://www.intel.com/pressroom/chipshots/archive.htm
+amd-opteron-launch,AMD 2010 prospectus (March 2010 Opteron 6100 launch),https://ir.amd.com/financial-information/sec-filings/content/0001193125-10-276510/d424b3.htm
+nv-c2050-launch,NVIDIA Tesla C2050 introduction (November 2009),https://www.globenewswire.com/news-release/2009/11/16/1149797/0/en/new-nvidia-tesla-gpus-reduce-cost-of-supercomputing-by-a-factor-of-10.html
+nv-c2050-spec,NVIDIA Tesla C2050 datasheet (238 W board TDP),https://www.nvidia.com/docs/IO/43395/NV_DS_Tesla_C2050_C2070_jul10_lores.pdf
+nv-c1060-launch,NVIDIA Tesla T10 platform launch (June 2008),https://www.designnews.com/industry/new-nvidia-tesla-platform-delivers-2x-performance-boost
+amd-6900xt,AMD Radeon RX 6900 XT specifications,https://www.amd.com/en/products/graphics/desktops/radeon/6000-series/amd-radeon-rx-6900-xt.html
