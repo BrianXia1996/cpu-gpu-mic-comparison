@@ -387,7 +387,7 @@ def annotate_points(ax, observations, traces, renderer, headroom=0):
         x, y = positions[i]
         center, cy = best_placed[i]
         ax.annotate(device["short_name"], xy[i], xytext=((center - x) / scale, (cy - y) / scale),
-                    textcoords="offset points", fontproperties=font, ha="center", va="center",
+                    textcoords="offset points", fontproperties=font, color=color, ha="center", va="center",
                     zorder=4, bbox={"boxstyle": "square,pad=0.10", "fc": "white", "ec": "none"},
                     arrowprops={"arrowstyle": "-", "color": color, "alpha": 0.62,
                                 "linewidth": 0.5, "shrinkA": 0.6, "shrinkB": 2.5})
